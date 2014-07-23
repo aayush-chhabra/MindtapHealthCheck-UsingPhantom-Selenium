@@ -1,0 +1,24 @@
+{
+	"login":1384,
+	"dashboard-load": 2991,
+	"dashboard-courses":{
+			"course1":2495,
+			"course2":2007,
+			"course3":2323,
+			"course4":1955,
+			"course5":2499,
+			"course6":2084,
+			"course7":2326,
+			"course8":1998,
+			"course9":1916,
+			"course10": 2186
+		},
+	"reading-activity":15001,
+	"mindapps":{
+		"fullbook":12717,
+		"glossary":2609,
+		"flashcard":2388,
+		"dictionary":2470,
+		"notes":15001
+	} 
+};
