@@ -1,4 +1,4 @@
-//var seleniumMindapp = require('./seleniumMindapp.js');
+var seleniumMindapp = require('./seleniumMindapp.js');
 var request = require('request');
 var http = require('http');
 
@@ -43,10 +43,12 @@ function sendJSONData() {
 
 
 function repeatSendingData(){
-	var populateJSON = exec("node seleniumMindapp.js", function(error, stdout, stderr){
-		recievedJSON = stdout;
-		sendJSONData();
-	});
+    
+    seleniumMindapp().done(function(data){
+        recievedJSON=data;
+        sendJSONData();
+    });
+
 }
 
 repeatSendingData();

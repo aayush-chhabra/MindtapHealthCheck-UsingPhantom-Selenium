@@ -1,10 +1,12 @@
 var sys = require('sys');
+var Promise = require('promise');
 
 var exec = require('child_process').exec;
 var childSeleniumMindapps, childPhantLogin, childPhantDashboard;
 var JSONToReturn = "{";
 
 function JSONFactory() {
+    return new Promise(function (fulfill, reject){
     childPhantLogin = exec("phantomjs LoginAndDashBoardCasper.js", function(error, stdout, stderr) {
         var dashboardCourses = getCoursesJson(stdout);
         var timingArray = stdout.split("\n");
@@ -37,12 +39,18 @@ function JSONFactory() {
                 }
                 mindAppJson += mindAppTimingArray[i] + "}";
                 JSONToReturn += mindAppJson + "};";
+                
+                if(!JSONToReturn)
+                    reject(err);
+                else
+                    fulfill(JSONToReturn);
                 //return JSONToReturn;
-                console.log(JSONToReturn);
+                //console.log(JSONToReturn);
 
             });
         });
     });
+});
 }
 
 
@@ -59,5 +67,5 @@ function getCoursesJson(stdout) {
     return JSONDataDashBoarCourses;
 }
 
-JSONFactory();
-//module.exports = JSONFactory;
+//JSONFactory();
+module.exports = JSONFactory;
