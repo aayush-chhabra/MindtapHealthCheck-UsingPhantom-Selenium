@@ -37,7 +37,9 @@ function JSONFactory() {
                 }
                 mindAppJson += mindAppTimingArray[i] + "}";
                 JSONToReturn += mindAppJson + "};";
-                return JSONToReturn;
+                //return JSONToReturn;
+                console.log(JSONToReturn);
+
             });
         });
     });
@@ -57,4 +59,5 @@ function getCoursesJson(stdout) {
     return JSONDataDashBoarCourses;
 }
 
-module.exports = JSONFactory;
+JSONFactory();
+//module.exports = JSONFactory;
