@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DashBoard!!</title>
+	<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body id="a">
+	<script type="text/javascript">
+		$(function(){
+		    $.ajax({
+			        url: 'http://localhost:8080/hi', 
+			        dataType: 'json',
+			        cache: false
+		    	}).done(function(data){
+		        	console.log("a");
+		        	console.log(data);
+		    	}); 
+			});
+	</script>
+
+</body>
+</html>

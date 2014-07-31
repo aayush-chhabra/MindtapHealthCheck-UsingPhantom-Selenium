@@ -3,11 +3,12 @@ var Promise = require('promise');
 
 var exec = require('child_process').exec;
 var childSeleniumMindapps, childPhantLogin, childPhantDashboard;
-var JSONToReturn = "{";
+var JSONToReturn;
 
 function JSONFactory() {
     return new Promise(function (fulfill, reject){
     childPhantLogin = exec("phantomjs LoginAndDashBoardCasper.js", function(error, stdout, stderr) {
+        JSONToReturn="{";
         var dashboardCourses = getCoursesJson(stdout);
         var timingArray = stdout.split("\n");
         var loginTiming = "\"login\":" + parseInt(timingArray[0]) + ",";
@@ -38,7 +39,7 @@ function JSONFactory() {
                     mindAppJson += mindAppTimingArray[i] + ",";
                 }
                 mindAppJson += mindAppTimingArray[i] + "}";
-                JSONToReturn += mindAppJson + "};";
+                JSONToReturn += mindAppJson + "}";
                 
                 if(!JSONToReturn)
                     reject(err);
