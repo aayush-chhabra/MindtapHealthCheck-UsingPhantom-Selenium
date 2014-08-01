@@ -86,6 +86,11 @@ app.get("/", function(req, res){
 });
 
 
+app.get("/gauge", function(req, res){
+    res.redirect("/index1.html");
+});
+
+
 app.listen(8080);
 
 console.log("Application is listening on port 8080");

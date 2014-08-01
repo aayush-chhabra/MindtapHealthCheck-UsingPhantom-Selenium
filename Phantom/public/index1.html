@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+      function h(){
+        
+        $.ajax({
+              url: 'http://localhost:8080/hi', 
+              dataType: 'json',
+              cache: false
+          }).done(function(data){
+            //for(i in data){
+              callbackFunction(data[0]);
+              //window.setTimeout(callbackFunction(data[i]), 3000)
+
+            //}
+          }); 
+      }
+      
+      var gaugeData=[];
+      var callbackFunction = function(data){
+        
+        var az=['Label', 'Value'];
+        gaugeData.push(az);
+        var keys = Object.keys(data);
+        //console.log(keys);
+        for(var i=1;i<keys.length;i++)
+        {
+          var a=[];
+          //console.log(typeof(data[keys[i]]));
+          if(typeof(data[keys[i]])==="object")
+          {
+            var subKeys = Object.keys(data[keys[i]]);
+            for(var j=0;j<subKeys.length;j++)
+            {
+              var b=[];
+              b.push(subKeys[j]); 
+              b.push((data[keys[i]])[subKeys[j]]);
+              //console.log((data[keys[i]])[subKeys[j]]);
+              //a.push(b);
+              b=[];
+              //a.push(data[keys[subKeys[j]]]);
+            }
+          }
+          else{
+            if(!(keys[i]==="instance-full-date"))
+            {
+              a.push(keys[i]);
+              a.push(data[keys[i]]);
+              gaugeData.push(a);
+            }
+            
+          }
+          
+          //console.log(a);
+          a=[];
+        }
+        console.log(gaugeData);
+        
+        }
+        
+          google.load('visualization', '1', {packages:['gauge']});
+          google.setOnLoadCallback(drawChart);
+        
+
+        function drawChart() {
+          
+          var data = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Memory', 80],
+            ['CPU', 55],
+            ['Network', 68]
+          ]);
+
+          console.log("a");
+
+          var options = {
+            width: 400, height: 120,
+            redFrom: 40, redTo: 50,
+            yellowFrom:20, yellowTo: 40,
+            minorTicks: 5, max: 50
+          };
+
+          var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+          chart.draw(data, options);
+      }
+        
+    </script>
+  </head>
+  <body>
+    <div id='chart_div'></div>
+  </body>
+</html>
