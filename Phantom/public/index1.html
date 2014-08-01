@@ -1,95 +1,139 @@
 <html>
-  <head>
+
+<head>
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-    
+    <script type="text/javascript" src="promise.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
-      //function h(){
-        
-        $.ajax({
-              url: 'http://localhost:8080/hi', 
-              dataType: 'json',
-              cache: false
-          }).done(function(data){
-            //for(i in data){
-              callbackFunction(data[0]);
-              //window.setTimeout(callbackFunction(data[i]), 3000)
+        var high = function() {
+            return new Promise(function(fulfill, reject) {
+                $.ajax({
+                    url: 'http://localhost:8080/hi',
+                    dataType: 'json',
+                    cache: false
+                }).done(function(data) {
+                        //for (i in data) {
+                           // var counter = 0;
+                           //  var i = setInterval(function(){
+                              //console.log("outcall");
+                              callbackFunction(data[0]).then(function(res) {
+                                //console.log("incall", res);
 
-            //}
-          }); 
-      //}
-      
-      var gaugeData=[];
-      var callbackFunction = function(data){
-        
-        var az=['Label', 'Value'];
-        gaugeData.push(az);
-        var keys = Object.keys(data);
-        //console.log(keys);
-        for(var i=1;i<keys.length;i++)
-        {
-          var a=[];
-          //console.log(typeof(data[keys[i]]));
-          if(typeof(data[keys[i]])==="object")
-          {
-            var subKeys = Object.keys(data[keys[i]]);
-            for(var j=0;j<subKeys.length;j++)
-            {
-              var b=[];
-              b.push(subKeys[j]); 
-              b.push((data[keys[i]])[subKeys[j]]);
-              //console.log((data[keys[i]])[subKeys[j]]);
-              //a.push(b);
-              b=[];
-              //a.push(data[keys[subKeys[j]]]);
-            }
-          }
-          else{
-            if(!(keys[i]==="instance-full-date"))
-            {
-              a.push(keys[i]);
-              a.push(data[keys[i]]);
-              gaugeData.push(a);
-            }
-            
-          }
-          
-          //console.log(a);
-          a=[];
-        }
-        console.log(gaugeData);
-        
-        }
-        
-          google.load('visualization', '1', {packages:['gauge']});
-          google.setOnLoadCallback(drawChart);
-        
+                                if (1)
+                                    fulfill(res);
+                                else
+                                    reject("a");
+                            });
 
-        function drawChart() {
-          
-          var data = google.visualization.arrayToDataTable([
-            ['Label', 'Value'],
-            ['Memory', 80],
-            ['CPU', 55],
-            ['Network', 68]
-          ]);
+                            //   counter++;
+                            //   if(counter===data.length-1)
+                            //   {
+                            //     clearInterval(i);
+                            //   }
+                            // },5000);
+                            
+                        //}
 
-          console.log("a");
+                    //window.setTimeout(callbackFunction(data[i]), 3000)
 
-          var options = {
-            width: 400, height: 120,
-            redFrom: 40, redTo: 50,
-            yellowFrom:20, yellowTo: 40,
-            minorTicks: 5, max: 50
-          };
-
-          var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-          chart.draw(data, options);
+                
+            });
+        });
       }
-        
+        var gaugeData = [];
+        var callbackFunction = function(data) {
+            return new Promise(function(fulfill, reject) {
+                gaugeData=[];
+                var az = ['Label', 'Value'];
+                gaugeData.push(az);
+                var keys = Object.keys(data);
+                //console.log(keys);
+                for (var i = 1; i < keys.length; i++) {
+                    var a = [];
+                    //console.log(typeof(data[keys[i]]));
+                    if (typeof(data[keys[i]]) === "object") {
+                        var subKeys = Object.keys(data[keys[i]]);
+                        for (var j = 0; j < subKeys.length; j++) {
+                            var b = [];
+                            b.push(subKeys[j]);
+                            b.push((data[keys[i]])[subKeys[j]]);
+                            //console.log((data[keys[i]])[subKeys[j]]);
+                            //a.push(b);
+                            b = [];
+                            //a.push(data[keys[subKeys[j]]]);
+                        }
+                    } else {
+                        if (!(keys[i] === "instance-full-date")) {
+                            a.push(keys[i]);
+                            a.push(data[keys[i]]);
+                            gaugeData.push(a);
+                        }
+
+                    }
+
+                    //console.log(a);
+                    a = [];
+                }
+                //console.log(gaugeData);
+                fulfill(gaugeData);
+            });
+
+
+        }
+
+        google.load('visualization', '1', {
+            packages: ['gauge']
+        });
+        google.setOnLoadCallback(drawChart);
+
+         // high().then(function(res){
+         //   console.log(res);
+         // });
+        function drawChart() {
+            high().then(function(res) {
+                console.log(res);
+                var data = google.visualization.arrayToDataTable(res);
+
+                console.log("a");
+
+                var options = {
+                    width: 600,
+                    height: 180,
+                    redFrom: 40000,
+                    redTo: 50000,
+                    yellowFrom: 20000,
+                    yellowTo: 40000,
+                    minorTicks: 5,
+                    max: 50000
+                };
+
+                var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            });
+            // var data = google.visualization.arrayToDataTable([
+            //   ['Label', 'Value'],
+            //   ['Memory', 80],
+            //   ['CPU', 55],
+            //   ['Network', 68]
+            // ]);
+
+            // console.log("a");
+
+            // var options = {
+            //   width: 400, height: 120,
+            //   redFrom: 40, redTo: 50,
+            //   yellowFrom:20, yellowTo: 40,
+            //   minorTicks: 5, max: 50
+            // };
+
+            // var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+            // chart.draw(data, options);
+        }
     </script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id='chart_div'></div>
-  </body>
+</body>
+
 </html>
