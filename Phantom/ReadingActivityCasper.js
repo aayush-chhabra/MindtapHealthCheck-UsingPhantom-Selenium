@@ -85,13 +85,52 @@ casper.waitUntilVisible(".lpn_name a", function() {
         this.capture('ImagesReadingActivity/SubLinksOrSubChapters.png');
         //console.log("clicked on the chapter!! waiting for the sub-chapter or the chapter content!!");
         try {
-            this.test.assertExists(".lpn a", "Good, the input item actually exist");
-            casper.waitUntilVisible(".lpn_name a", function() {
+            this.test.assertExists(".thumbIcon", "Good, the input item actually exist");
+            casper.waitUntilVisible(".thumbIcon", function() {
                 this.capture('ImagesReadingActivity/Sublinks.png');
+
+                this.thenClick(".thumbIcon");
+                
+                casper.wait(5000,function(){
+                    this.capture("ImagesReadingActivity/temporary.png");    
+                })
+
+                    casper.waitUntilVisible(".ereader_iframe", function() {
+                this.capture("ImagesReadingActivity/testIFrame.png");
+                casper.page.switchToChildFrame("1_NB_Main_IFrame");
+                //console.log(casper.page.focusedFrameName);
+
+                casper.waitUntilVisible("#breadcrumb", function() {
+                    try {
+                        casper.test.assertExists("#breadcrumb", "BreadCrumbs Exist");
+                        casper.capture("ImagesReadingActivity/afterFrameLoad.png");
+                        endTime = new Date().getTime();
+                        //console.log("Reading activity load time, hard coded right now - (get back to Giorgio: )")
+                        console.log(endTime - startTime);
+                    } catch (err) {
+                        console.log("50000");
+                        return;
+                    }
+                }, function timeout() {
+                    console.log("50000");
+                    casper.capture("ImagesReadingActivity/BreadCrumbTimeOut.png");
+                    return;
+                }, 10000);
+
+
+            }, function timeout() {
+                console.log("50000");
+                casper.capture("ImagesReadingActivity/IframeTimeOut.png");
+                return;
+            }, 10000);
+                
+
             }, function timeout() {
                 console.log("50000");
                 return;
             }, 10000);
+
+
         } catch (err) { //ereader_iframe
             casper.waitUntilVisible(".ereader_iframe", function() {
                 this.capture("ImagesReadingActivity/testIFrame.png");

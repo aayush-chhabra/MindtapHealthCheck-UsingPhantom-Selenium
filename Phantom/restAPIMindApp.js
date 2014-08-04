@@ -80,6 +80,33 @@ app.get("/hi", function(req, res){
         });
 });
 
+app.get("/hii", function(req, res){
+
+    db = new mongo.Db('DashBoardDB', new mongo.Server("127.0.0.1", 27017, {}), {
+            safe: true
+        });
+        
+        db.open(function(err, db) {
+            if (err) {
+                console.log("Database Error!!");
+                //create database
+            }
+            db.collection('dashBoardHealthData', function(err, collection) {
+
+                if (err) {
+                    //create collection
+                    console.log("Collection Error!!")
+                }
+
+                collection.find().sort( { _id : -1 } ).limit(1).toArray(function(err, items) {
+                    res.send(items[0]);
+                });
+
+
+            });
+        });
+});
+
 
 app.get("/", function(req, res){
 	res.redirect("/index.html");

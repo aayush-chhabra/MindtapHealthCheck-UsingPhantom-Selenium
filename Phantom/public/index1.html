@@ -8,19 +8,24 @@
         var high = function() {
             return new Promise(function(fulfill, reject) {
                 $.ajax({
-                    url: 'http://localhost:8080/hi',
+                    url: 'http://localhost:8080/hii',
                     dataType: 'json',
                     cache: false
                 }).done(function(data) {
+
                         //for (i in data) {
                            // var counter = 0;
                            //  var i = setInterval(function(){
                               //console.log("outcall");
-                              callbackFunction(data[0]).then(function(res) {
+                              callbackFunction(data).then(function(res) {
                                 //console.log("incall", res);
-
+                                //console.log(res);
                                 if (1)
+                                {
+                                    //console.log(res,"a");
                                     fulfill(res);
+
+                                }
                                 else
                                     reject("a");
                             });
@@ -81,35 +86,28 @@
 
         }
 
-        google.load('visualization', '1', {
-            packages: ['gauge']
-        });
-        google.setOnLoadCallback(drawChart);
+        //function loadGauge(){
 
-         // high().then(function(res){
-         //   console.log(res);
-         // });
-        function drawChart() {
-            high().then(function(res) {
-                console.log(res);
-                var data = google.visualization.arrayToDataTable(res);
-
-                console.log("a");
-
-                var options = {
-                    width: 600,
-                    height: 180,
-                    redFrom: 40000,
-                    redTo: 50000,
-                    yellowFrom: 20000,
-                    yellowTo: 40000,
-                    minorTicks: 5,
-                    max: 50000
-                };
-
-                var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-                chart.draw(data, options);
+            
+            google.load('visualization', '1', {
+                packages: ['gauge']
             });
+            
+            
+            google.setOnLoadCallback(drawChart);
+
+
+
+            // console.log(google);
+
+            // alert('loadGauge called');
+            
+
+             // high().then(function(res){
+             //   console.log(res);
+             // });
+            
+        
             // var data = google.visualization.arrayToDataTable([
             //   ['Label', 'Value'],
             //   ['Memory', 80],
@@ -128,7 +126,35 @@
 
             // var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
             // chart.draw(data, options);
-        }
+        //}
+
+        function drawChart() {
+
+                console.log('drawChart called');
+
+                high().then(function(res) {
+                    console.log(res);
+                    var data = google.visualization.arrayToDataTable(res);
+
+                    console.log("a");
+
+                    var options = {
+                        width: 600,
+                        height: 180,
+                        redFrom: 40000,
+                        redTo: 50000,
+                        yellowFrom: 20000,
+                        yellowTo: 40000,
+                        minorTicks: 5,
+                        max: 50000
+                    };
+
+                    var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                });
+            }
+        //loadGauge();    
+        setInterval(drawChart, 120000);
     </script>
 </head>
 
