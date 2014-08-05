@@ -109,7 +109,8 @@ app.get("/hii", function(req, res){
 });
 
 
-app.get("/hiii", function(req, res){ //returns an array of all the locations instances
+
+app.get("/getInstanceLocations", function(req, res){
 
     db = new mongo.Db('DashBoardDB', new mongo.Server("127.0.0.1", 27017, {}), {
             safe: true
@@ -128,13 +129,39 @@ app.get("/hiii", function(req, res){ //returns an array of all the locations ins
                 }
 
                 collection.distinct("instance-location", function(err, items){
-                    //res.send(items);
+                    items = JSON.stringify(items);
+                    res.send(items);
+                });
+            });
+        });
+});
 
-                    collection.find({"instance-location":items[0]}).toArray(function(err,addons){
-                        res.send(addons);
+
+
+app.get("/hiii/:location_id", function(req, res){ //returns an array of all the locations instances
+
+    db = new mongo.Db('DashBoardDB', new mongo.Server("127.0.0.1", 27017, {}), {
+            safe: true
+        });
+        
+        db.open(function(err, db) {
+            if (err) {
+                console.log("Database Error!!");
+                //create database
+            }
+            db.collection('dashBoardHealthData', function(err, collection) {
+
+                if (err) {
+                    //create collection
+                    console.log("Collection Error!!")
+                }
+
+
+
+                    collection.find({"instance-location":req.params.location_id}).sort( { _id : -1 } ).limit(1).toArray(function(err,items){
+                        res.send(items);
                     });
 
-                });
             });
         });
 });
@@ -151,6 +178,13 @@ app.get("/", function(req, res){
 app.get("/gauge", function(req, res){
     res.redirect("/index1.html");
 });
+
+app.get("/gaugeInter", function(req, res){
+    res.redirect("/index2.html");
+});
+
+
+
 
 
 String.prototype.trim = function() {
