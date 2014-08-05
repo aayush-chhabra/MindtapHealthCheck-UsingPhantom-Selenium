@@ -128,7 +128,12 @@ app.get("/hiii", function(req, res){ //returns an array of all the locations ins
                 }
 
                 collection.distinct("instance-location", function(err, items){
-                    res.send(items);
+                    //res.send(items);
+
+                    collection.find({"instance-location":items[0]}).toArray(function(err,addons){
+                        res.send(addons);
+                    });
+
                 });
             });
         });
