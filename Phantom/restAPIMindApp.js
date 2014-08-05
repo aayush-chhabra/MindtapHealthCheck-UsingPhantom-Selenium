@@ -18,6 +18,8 @@ app.post("/hello", function(req, res) {
     		//console.log('JSON Object: ' + body);
 
     		//console.log('\n\n\n');
+        
+
 
         contentFromFile["instance-full-date"] = new Date();
         
@@ -102,10 +104,38 @@ app.get("/hii", function(req, res){
                     res.send(items[0]);
                 });
 
-
             });
         });
 });
+
+
+app.get("/hiii", function(req, res){ //returns an array of all the locations instances
+
+    db = new mongo.Db('DashBoardDB', new mongo.Server("127.0.0.1", 27017, {}), {
+            safe: true
+        });
+        
+        db.open(function(err, db) {
+            if (err) {
+                console.log("Database Error!!");
+                //create database
+            }
+            db.collection('dashBoardHealthData', function(err, collection) {
+
+                if (err) {
+                    //create collection
+                    console.log("Collection Error!!")
+                }
+
+                collection.distinct("instance-location", function(err, items){
+                    res.send(items);
+                });
+            });
+        });
+});
+
+
+
 
 
 app.get("/", function(req, res){
@@ -117,6 +147,10 @@ app.get("/gauge", function(req, res){
     res.redirect("/index1.html");
 });
 
+
+String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, "");
+};
 
 app.listen(8080);
 

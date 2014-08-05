@@ -39,7 +39,7 @@ function JSONFactory() {
                     mindAppJson += mindAppTimingArray[i] + ",";
                 }
                 mindAppJson += mindAppTimingArray[i] + "}";
-                JSONToReturn += mindAppJson + "}";
+                JSONToReturn += mindAppJson + ",\"instance-location\":\"Boston\"}";
                 
                 if(!JSONToReturn)
                     reject(err);

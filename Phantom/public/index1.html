@@ -13,65 +13,63 @@
                     cache: false
                 }).done(function(data) {
 
-                        //for (i in data) {
-                           // var counter = 0;
-                           //  var i = setInterval(function(){
-                              //console.log("outcall");
-                              callbackFunction(data).then(function(res) {
-                                //console.log("incall", res);
-                                //console.log(res);
-                                if (1)
-                                {
-                                    //console.log(res,"a");
-                                    fulfill(res);
 
-                                }
-                                else
-                                    reject("a");
-                            });
+                    callbackFunction(data).then(function(res) {
+                        if (1) {
+                            fulfill(res);
 
-                            //   counter++;
-                            //   if(counter===data.length-1)
-                            //   {
-                            //     clearInterval(i);
-                            //   }
-                            // },5000);
-                            
-                        //}
-
-                    //window.setTimeout(callbackFunction(data[i]), 3000)
-
-                
+                        } else
+                            reject("a");
+                    });
+                });
             });
-        });
-      }
+        }
         var gaugeData = [];
+        var gData = [];
+        var mindAppData = [];
+        var instanceLocation="";
         var callbackFunction = function(data) {
             return new Promise(function(fulfill, reject) {
-                gaugeData=[];
+                var sumOfMindapps = 0;
+                gaugeData = [];
                 var az = ['Label', 'Value'];
                 gaugeData.push(az);
+                gData.push(az);
                 var keys = Object.keys(data);
                 //console.log(keys);
                 for (var i = 1; i < keys.length; i++) {
                     var a = [];
                     //console.log(typeof(data[keys[i]]));
                     if (typeof(data[keys[i]]) === "object") {
-                        var subKeys = Object.keys(data[keys[i]]);
-                        for (var j = 0; j < subKeys.length; j++) {
-                            var b = [];
-                            b.push(subKeys[j]);
-                            b.push((data[keys[i]])[subKeys[j]]);
-                            //console.log((data[keys[i]])[subKeys[j]]);
-                            //a.push(b);
-                            b = [];
-                            //a.push(data[keys[subKeys[j]]]);
+                        console.log(keys[i]);
+
+
+                        if (keys[i] === "mindapps") {
+                            var subKeys = Object.keys(data[keys[i]]);
+                            for (var j = 0; j < subKeys.length; j++) {
+                                var b = [];
+                                b.push(subKeys[j]);
+                                b.push((data[keys[i]])[subKeys[j]]);
+                                //console.log((data[keys[i]])[subKeys[j]]);
+                                //a.push(b);
+                                //console.log(b);
+                                mindAppData.push(b);
+                                b = [];
+                                //a.push(data[keys[subKeys[j]]]);
+                            }
                         }
+
+
                     } else {
-                        if (!(keys[i] === "instance-full-date")) {
+                        if (keys[i] === "reading-activity") {
+                            //if(parseInt(data[keys[i]]) === 50000 &&
                             a.push(keys[i]);
                             a.push(data[keys[i]]);
                             gaugeData.push(a);
+                        }
+                        else if(keys[i] === "instance-location")
+                        {
+                            instanceLocation=data[keys[i]];
                         }
 
                     }
@@ -79,57 +77,52 @@
                     //console.log(a);
                     a = [];
                 }
-                //console.log(gaugeData);
-                fulfill(gaugeData);
+                //console.log(mindAppData,"mindAppData");
+                for (i in mindAppData)
+                    gaugeData.push(mindAppData[i]);
+                mindAppData=[];
+                mindAppData.push(instanceLocation);
+                //for(var j=2; j<gaugeData.length;j++)
+                //{
+                    //console.log(gaugeData[j][1], "a");
+                    if(parseInt(gaugeData[1][1]) === 50000 && parseInt(gaugeData[2][1]) !== 50000 && parseInt(gaugeData[3][1]) !== 50000 && parseInt(gaugeData[4][1]) !== 50000)
+                    {
+                        sumOfMindapps+=parseInt(gaugeData[2][1]) + parseInt(gaugeData[3][1]) + parseInt(gaugeData[4][1]);
+                        sumOfMindapps = sumOfMindapps/3;
+                        mindAppData.push(sumOfMindapps);
+                    }   
+                    else
+                    {
+
+                        sumOfMindapps+=parseInt(gaugeData[1][1]) + parseInt(gaugeData[2][1]) + parseInt(gaugeData[3][1]) + parseInt(gaugeData[4][1]);
+                        sumOfMindapps = sumOfMindapps/4;
+                        mindAppData.push(sumOfMindapps);
+                    }
+                //}
+                //console.log(sumOfMindapps);
+                gData.push(mindAppData);
+                mindAppData=[];
+                fulfill(gData);
             });
 
 
         }
 
-        //function loadGauge(){
-
-            
-            google.load('visualization', '1', {
-                packages: ['gauge']
-            });
-            
-            
-            google.setOnLoadCallback(drawChart);
+         //function loadGauge(){
 
 
+        google.load('visualization', '1', {
+            packages: ['gauge']
+        });
 
-            // console.log(google);
 
-            // alert('loadGauge called');
-            
+        google.setOnLoadCallback(drawChart);
 
-             // high().then(function(res){
-             //   console.log(res);
-             // });
-            
-        
-            // var data = google.visualization.arrayToDataTable([
-            //   ['Label', 'Value'],
-            //   ['Memory', 80],
-            //   ['CPU', 55],
-            //   ['Network', 68]
-            // ]);
 
-            // console.log("a");
-
-            // var options = {
-            //   width: 400, height: 120,
-            //   redFrom: 40, redTo: 50,
-            //   yellowFrom:20, yellowTo: 40,
-            //   minorTicks: 5, max: 50
-            // };
-
-            // var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-            // chart.draw(data, options);
-        //}
 
         function drawChart() {
-
+                gaugeData=[];
+                gData=[];
                 console.log('drawChart called');
 
                 high().then(function(res) {
@@ -153,7 +146,7 @@
                     chart.draw(data, options);
                 });
             }
-        //loadGauge();    
+            //loadGauge();    
         setInterval(drawChart, 120000);
     </script>
 </head>
