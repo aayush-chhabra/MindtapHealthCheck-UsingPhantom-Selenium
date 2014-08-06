@@ -183,6 +183,10 @@ app.get("/gaugeInter", function(req, res){
     res.redirect("/index2.html");
 });
 
+app.get("/gaugeTemp", function(req, res){
+    res.redirect("/index3.html");
+});
+
 
 
 
