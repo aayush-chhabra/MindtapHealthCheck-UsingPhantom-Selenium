@@ -187,6 +187,9 @@ app.get("/gaugeTemp", function(req, res){
     res.redirect("/index3.html");
 });
 
+app.get("/templateSanat", function(req, res){
+    res.redirect("/sanatIndex.html");
+});
 
 
 

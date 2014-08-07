@@ -75,3 +75,13 @@ footer {
 .main .page-header {
   margin-top: 0;
 }
+
+.iframeClass{
+  position: relative;
+  height: 0px;
+  width:100%;
+}
+
+#chart_div{
+  background-color: #000;
+}
