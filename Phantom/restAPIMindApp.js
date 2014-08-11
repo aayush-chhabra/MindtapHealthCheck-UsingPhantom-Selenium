@@ -166,6 +166,35 @@ app.get("/hiii/:location_id", function(req, res){ //returns an array of all the 
         });
 });
 
+app.get("/getObjects/:number", function(req, res){ //returns an array of all the locations instances
+
+    db = new mongo.Db('DashBoardDB', new mongo.Server("127.0.0.1", 27017, {}), {
+            safe: true
+        });
+        
+        db.open(function(err, db) {
+            if (err) {
+                console.log("Database Error!!");
+                //create database
+            }
+            db.collection('dashBoardHealthData', function(err, collection) {
+
+                if (err) {
+                    //create collection
+                    console.log("Collection Error!!")
+                }
+
+
+
+                    collection.find().sort( { _id : -1 } ).limit(parseInt(req.params.number)).toArray(function(err,items){
+                        res.send(items);
+                    });
+
+            });
+        });
+});
+
+
 
 
 
