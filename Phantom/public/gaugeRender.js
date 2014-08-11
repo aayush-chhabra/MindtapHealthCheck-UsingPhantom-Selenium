@@ -217,13 +217,13 @@
 
         $(document).ready(function(){
 
-            $("#chart_div").click(function(){
-                var myDiv = document.createElement('iframe');
-                myDiv.id = 'myDiv';
-                myDiv.src="http://www.w3schools.com";
-                myDiv.class="iframeClass";
-                //$("#iframeInsert").appendChild(myDiv); 
-                var iframeInsert = $("#iframeInsert");
-                iframeInsert.append(myDiv);
-            });
+            // $("#chart_div").click(function(){
+            //     var myDiv = document.createElement('iframe');
+            //     myDiv.id = 'myDiv';
+            //     myDiv.src="http://www.w3schools.com";
+            //     myDiv.class="iframeClass";
+            //     //$("#iframeInsert").appendChild(myDiv); 
+            //     var iframeInsert = $("#iframeInsert");
+            //     iframeInsert.append(myDiv);
+            // });
         }); 

@@ -13,7 +13,8 @@ function dashboard(id, fData) {
 
     // compute total for each state.
     fData.forEach(function(d) {
-        d.total = d.freq.Login + d.freq.Dashboard + d.freq.CourseAverage + d.freq.MindappAverage + d.freq.ReadingActivity;
+        d.total = (d.freq.Login + d.freq.Dashboard + d.freq.CourseAverage + d.freq.MindappAverage + d.freq.ReadingActivity) /5;
+        d.total = Math.floor(d.total);
     });
 
     // function to handle histogram.
@@ -25,7 +26,7 @@ function dashboard(id, fData) {
                 b: 30,
                 l: 0
             };
-        hGDim.w = 500 - hGDim.l - hGDim.r,
+        hGDim.w = 700 - hGDim.l - hGDim.r,
             hGDim.h = 300 - hGDim.t - hGDim.b;
 
         //create svg for histogram.
@@ -283,21 +284,6 @@ function dashboard(id, fData) {
         leg = legend(tF); // create the legend.
 }
 
-
-// var freqData=[
-//     {State:'AL',freq:{low:4786, mid:1319, high:249}}
-//     ,{State:'AZ',freq:{low:1101, mid:412, high:674}}
-//     ,{State:'CT',freq:{low:932, mid:2149, high:418}}
-//     ,{State:'DE',freq:{low:832, mid:1152, high:1862}}
-//     ,{State:'FL',freq:{low:4481, mid:3304, high:948}}
-//     ,{State:'GA',freq:{low:1619, mid:167, high:1063}}
-//     ,{State:'IA',freq:{low:1819, mid:247, high:1203}}
-//     ,{State:'IL',freq:{low:4498, mid:3852, high:942}}
-//     ,{State:'IN',freq:{low:797, mid:1849, high:1534}}
-//     ,{State:'KS',freq:{low:162, mid:379, high:471}}
-// ];
-
-
 var getLocations = function() {
     return new Promise(function(fulfill, reject) {
         $.ajax({
@@ -311,7 +297,7 @@ var getLocations = function() {
 };
 
 
-var newfunction = function() {
+var computeObject  = function() {
     return new Promise(function(fulfill, reject) {
         var arrayIndiObjects = [];
         getLocations().then(function(data) {
@@ -319,10 +305,18 @@ var newfunction = function() {
             var freq = {};
             //console.log(data[0].mindapps);
             for (var i = 0; i < data.length; i++) {
-                indiObject.State = data[i]["instance-full-date"];
+                loc = data[i]["instance-location"];
+                date = new Date(data[i]["instance-full-date"]);
+                
+                //date = Date.parse(date);
+                hours = date.getHours();
+                minutes = date.getMinutes();
+                seconds = date.getSeconds();
+                var instanceInformation = loc.toString()+" "+ i.toString();
+
+                indiObject.State = instanceInformation; //data[i]["instance-full-date"];
                 freq.Login = data[i]["login"];
                 freq.Dashboard = data[i]["dashboard-load"];
-                freq.ReadingActivity = data[i]["reading-activity"];
                 // ----
 
                 var coursesDashboard = data[i]["dashboard-courses"];
@@ -343,7 +337,7 @@ var newfunction = function() {
                 //console.log(courses);
                 var mindappTotal=0;
                 for(var j=0;j<courses.length; j++){
-                    console.log(coursesDashboard[courses[j]]);
+                    //console.log(coursesDashboard[courses[j]]);
                     mindappTotal += parseInt(coursesDashboard[courses[j]]);
                 }
                 mindappTotal = mindappTotal / courses.length;
@@ -351,26 +345,25 @@ var newfunction = function() {
                 
 
 
-                console.log("average", mindappTotal);
+                //console.log("average", mindappTotal);
                 freq.MindappAverage = mindappTotal;
                 freq.CourseAverage = coursesTotal;
+                freq.ReadingActivity = data[i]["reading-activity"];
                 indiObject.freq = freq;
                 arrayIndiObjects.push(indiObject);
                 //console.log(indiObject);
                 indiObject = {};
                 freq = {};
             }
-            //console.log(arrayIndiObjects);
+            console.log(arrayIndiObjects);
             fulfill(arrayIndiObjects);
-            //console.log(data);
-
         });
     });
 }
 
-newfunction().then(function(data){
-    //console.log(data);
+computeObject().then(function(data){
     dashboard('#dashboard', data);
+    console.log("in here!");
 });
 
 
