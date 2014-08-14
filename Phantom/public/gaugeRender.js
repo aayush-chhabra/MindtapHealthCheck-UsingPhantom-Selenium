@@ -16,7 +16,7 @@
 
         var high = function(location) {
             return new Promise(function(fulfill, reject) {
-                console.log(location);
+                
                 var url = 'http://localhost:8080/hiii/'+location;
                 $.ajax({
                     url: url,
@@ -25,7 +25,6 @@
                 }).done(function(data) {
 
                     callbackFunction(data).then(function(res) {
-                        console.log("a");
                         if (1) {
                             fulfill(res);
 
@@ -47,15 +46,10 @@
                         var count=0;
                         for(i in res)
                         {
-                            
-                            console.log(count,"count");
-                            console.log(res.length,"res.length");
                             high(res[i]).then(function(data){
                                 count++;
-                                console.log(data, "dataaaa");
                                 gData.push(data);
                                 if(count===res.length){
-                                    console.log(gData, gData.length ,"sending data from newFunction", gData[0], gData[1], gData[2] );
                                     fulfill(gData);
                                 }
                             });
@@ -77,7 +71,6 @@
         var instanceLocation="";
         var callbackFunction = function(data) {
             return new Promise(function(fulfill, reject) {
-                console.log("in callback");
                 var mindAppData = [];
                 var sumOfMindapps = 0;
                 gaugeData = [];
@@ -86,18 +79,17 @@
                 //gData.push(az);
                 data = data[0];
                 var keys = Object.keys(data);
-                console.log(keys);
+
                 for (var i = 1; i < keys.length; i++) {
                     var a = [];
-                    //console.log(typeof(data[keys[i]]));
                     if (typeof(data[keys[i]]) === "object") {
-                        console.log(data[keys[i]],"in here!!");
+                        
 
 
                         if (keys[i] === "mindapps") {
-                            console.log("here i am")
+                            
                             var subKeys = Object.keys(data[keys[i]]);
-                            console.log(data[keys[i]], "aaaaa")
+                            
                             for (var j = 0; j < subKeys.length; j++) {
                                 var b = [];
                                 b.push(subKeys[j]);
@@ -110,7 +102,7 @@
 
                                 //a.push(data[keys[subKeys[j]]]);
                             }
-                            console.log(mindAppData,"hih");
+                            
                         }
 
 
@@ -161,7 +153,7 @@
                 //console.log(sumOfMindapps);
                 //gData.push(mindAppData);
                 //mindAppData=[];
-                console.log(mindAppData,"mad");
+                
                 fulfill(mindAppData);
             });
         }
@@ -188,13 +180,13 @@
                 gData=[];
 
                 gData.push(['Label', 'Value']);
-                console.log('drawChart called');
+                
 
                 newFunction().then(function(res) {
-                    console.log(res, res.length ,"res.length", res[0], res[1], res[2]);
+                    
                     var data = google.visualization.arrayToDataTable(res);
 
-                    console.log("omg");
+                    
 
                     var options = {
                         width: 800,
@@ -207,7 +199,7 @@
                         max: 50000
                     };
 
-                    console.log("lol");
+                    
                     var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
                     chart.draw(data, options);
                 });

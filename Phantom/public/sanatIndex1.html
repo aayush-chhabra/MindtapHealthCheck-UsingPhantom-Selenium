@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mindtap Health</title>
+    <script src="js/jquery-1.11.0.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <title>MindTap Health</title>
+    <link rel="shortcut icon" href="icon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/effect2.css" />
+    <script src="js/modernizr.custom.js"></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type="text/javascript" src="promise.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="gaugeRender1.js"></script>
+    <style type="text/css">
+
+        /*------ utiltity classes -----*/
+        .fl{ float:left; }
+        .fr{ float: right; }
+        /*its also known as clearfix*/
+        .group:before,
+        .group:after {
+            content: "";
+            display: table;
+        } 
+        .group:after {
+            clear: both;
+        }
+        .group {
+            zoom: 1;  /*For IE 6/7 (trigger hasLayout) */
+        }
+
+        .wrapper {
+            
+        }
+        .pricing-table {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+            padding: 10px;
+            padding-right: 0;
+        }
+        .pricing-table .heading{
+            color: #9C9E9F;
+            text-transform: uppercase;
+            font-size: 1.3rem;
+            margin-bottom: 4rem;
+        }
+        .block{
+            width: 30%;    
+            margin: 0 15px;
+            overflow: hidden;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;    
+        /*    border: 1px solid red;*/
+        }
+        /*Shared properties*/
+        .title,.pt-footer{
+            color: #FEFEFE;
+            text-transform: capitalize;
+            line-height: 2.5;
+            position: relative;
+        }
+        .content{
+            position: relative;
+            color: #FEFEFE;
+            padding: 20px 0 10px 0;
+        }
+        /*arrow creation*/
+        .content:after, .content:before,.pt-footer:before,.pt-footer:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        .pt-footer:after,.pt-footer:before{
+            top:0;
+        }
+        .content:after,.pt-footer:after {
+            border-color: rgba(136, 183, 213, 0);   
+            border-width: 5px;
+            margin-left: -5px;
+        }
+        /*/arrow creation*/
+        .price{
+            position: relative;
+            display: inline-block;
+            margin-bottom: 0.625rem;
+        }
+        .price span{    
+            font-size: 6rem;
+            letter-spacing: 8px;
+            font-weight: bold;        
+        }
+        .price sup{
+            font-size: 1.5rem;    
+            position: absolute;    
+            top: 12px;
+            left: -12px;
+        }
+        .hint{
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .features{
+            list-style-type: none;    
+            background: #FFFFFF;
+            text-align: left;
+            color: #9C9C9C;
+            padding:30px 22%;
+            font-size: 3.0rem;
+        }
+        .red{
+            color: #9C9C9C;
+        }
+        .yellow{
+            color: #9C9C9C;
+        }
+        .green{
+            color: #00FF44;
+        }
+        .features li{
+            padding:15px 0;
+            width: 100%;
+            font-weight: bold;
+        }
+        .features li span{
+           padding-right: 0.4rem; 
+        }
+        .pt-footer{
+            font-size: 0.95rem;
+            text-transform: capitalize;
+        }
+        /*PERSONAL*/
+        .personal .title{        
+            background: #78CFBF;    
+        }
+        .personal .content,.personal .pt-footer{
+            background: #82DACA;
+        }
+        .personal .content:after{   
+            border-top-color: #82DACA;  
+        }
+        .personal .pt-footer:after{
+            border-top-color: #FFFFFF;
+        }
+        /*PROFESSIONAL*/
+        .professional .title{
+            background: #3EC6E0;
+        }
+        .professional .content,.professional .pt-footer{
+            background: #53CFE9;
+        }
+        .professional .content:after{   
+            border-top-color: #53CFE9;  
+        }
+        .professional .pt-footer:after{
+            border-top-color: #FFFFFF;
+        }
+        /*BUSINESS*/
+        .business .title{
+            background: #E3536C;
+        }
+        .business .content,.business .pt-footer{
+            background: #EB6379;
+        }
+        .business .content:after{   
+            border-top-color: #EB6379;  
+        }
+        .business .pt-footer:after {    
+            border-top-color: #FFFFFF;  
+        }
+
+    </style>
+</head>
+
+<!-- Preloading Page Section -->
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <div id="ip-container" class="ip-container">
+        <header class="ip-header">
+            <div class="ip-loader">
+                <svg class="ip-inner" width="60px" height="60px" viewBox="0 0 80 80">
+                    <path class="ip-loader-circlebg" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z" />
+                    <path id="ip-loader-circle" class="ip-loader-circle" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z" />
+                </svg>
+            </div>
+        </header>
+    </div>
+    
+    <!-- Front Page -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="https://s-login.cengage.com">
+                    <i class="fa fa-globe"></i>  <span class="light">Cengage</span> Learning
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li>
+                        <a class="page-scroll" href="#page-top"> <i class="fa fa-home"> </i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#time">Time</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#pulse">Pulse</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <h1 class="brand-heading">Mindtap Health</h1>
+                        <p class="intro-text">A Performance Analyzer</p>
+                        <a href="#time" class="btn btn-mini btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Time Section -->
+    <section id="time" class="container content-section text-center">
+        <div class="row">
+            <div>
+                <div id='chart_div' class="hello"></div>
+                <div class="wrapper">
+                <!-- PRICING-TABLE CONTAINER -->
+                <div class="pricing-table group" id="appendTableContents">
+                    <h1 class="heading">
+                        MindTap Health Information
+                    </h1>
+                    <div class="block personal fl">
+                        <h2 class="title" id="locationName1"></h2>
+                        <div class="content">
+                            <p class="price">
+                                <span class="fakeClass" id="mindtapHealth1"></span>
+                            </p>
+                        </div>
+                        <ul class="features">
+                            <li class="fakeClass1" id="status1"></li>
+                        </ul>
+                    </div>
+                    <div class="block personal fl">
+                        <h2 class="title" id="locationName2"></h2>
+                        <div class="content">
+                            <p class="price">
+                                <span class="fakeClass" id="mindtapHealth2"></span>
+                            </p>
+                        </div>
+                        <ul class="features">
+                            <li class="fakeClass1" id="status2"></li>
+                        </ul>
+                    </div>
+                    <div class="block personal fl">
+                        <h2 class="title" id="locationName3"></h2>
+                        <div class="content">
+                            <p class="price">
+                                <span class="fakeClass" id="mindtapHealth3"></span>
+                            </p>
+                        </div>
+                        <ul class="features">
+                            <li class="fakeClass1" id="status3"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Pulse Section -->
+    <section id="pulse" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                </div>
+                <img src="img/batman-logo.jpg">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="container text-center">
+            <p>
+                <br>Developed by:
+                <br>Aayush Chabbra - Software Engineering Intern
+                <br>Sanat Chugh - Software Engineering Intern
+                <p>Copyright &copy; Cengage Learning 2014</p>
+                <br>
+                <a href="https://www.facebook.com/CengageLearningCorporate">
+                <button class="btn btn-xlarge btn-facebook" ><i class="fa fa-facebook"></i> | Connect with Facebook</button></a>
+                <a href="https://twitter.com/CengageLearning"><button class="btn btn-xlarge btn-twitter" ><i class="fa fa-twitter" ></i> | Connect with Twitter</button></a>
+                <a href="https://plus.google.com/106938138583330955275/about"><button class="btn btn-xlarge btn-google-plus"><i class="fa fa-google-plus"></i> | Connect with Google+</button></a>
+                <br>
+        </div>
+    </footer>
+
+    <!-- jQuery Version 1.11.0 -->
+    
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/classie.js"></script>
+    <script src="js/pathLoader.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/grayscale.js"></script>
+
+</body>
+
+</html>

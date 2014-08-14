@@ -1,7 +1,9 @@
 function dashboard(id, fData) {
+    
     var barColor = 'steelblue';
 
     function segColor(c) {
+    
         return {
             Login: "#807dba",
             Dashboard: "#e08214",
@@ -11,14 +13,16 @@ function dashboard(id, fData) {
         }[c];
     }
 
+
     // compute total for each state.
     fData.forEach(function(d) {
         d.total = (d.freq.Login + d.freq.Dashboard + d.freq.CourseAverage + d.freq.MindappAverage + d.freq.ReadingActivity) /5;
         d.total = Math.floor(d.total);
     });
-
+    
     // function to handle histogram.
     function histoGram(fD) {
+        
         var hG = {},
             hGDim = {
                 t: 60,
@@ -139,8 +143,10 @@ function dashboard(id, fData) {
         return hG;
     }
 
+    
     // function to handle pieChart.
     function pieChart(pD) {
+        
         var pC = {},
             pieDim = {
                 w: 250,
@@ -205,8 +211,10 @@ function dashboard(id, fData) {
         return pC;
     }
 
+    
     // function to handle legend.
     function legend(lD) {
+        
         var leg = {};
 
         // create table for legend.
@@ -264,24 +272,32 @@ function dashboard(id, fData) {
         return leg;
     }
 
+    
+    var array = ["Login", "Dashboard", "CourseAverage", "MindappAverage", "ReadingActivity"];
     // calculate total frequency by segment for all state.
-    var tF = ['Login', 'Dashboard', "CourseAverage", "MindappAverage", "ReadingActivity"].map(function(d) {
+    var tF = array.map(function(d) {
+        
         return {
             type: d,
             freq: d3.sum(fData.map(function(t) {
+                
                 return t.freq[d];
             }))
         };
     });
 
+
+    
     // calculate total frequency by state for all segment.
     var sF = fData.map(function(d) {
         return [d.State, d.total];
     });
 
+    
     var hG = histoGram(sF), // create the histogram.
         pC = pieChart(tF), // create the pie-chart.
         leg = legend(tF); // create the legend.
+    
 }
 
 var getLocations = function() {
@@ -362,8 +378,8 @@ var computeObject  = function() {
 }
 
 computeObject().then(function(data){
+    console.log(data, "dattaaaa");
     dashboard('#dashboard', data);
-    console.log("in here!");
 });
 
 

@@ -9,7 +9,7 @@ body {
     height: 100%;
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
-    background-color: #000;
+    background-color: #1A1A1A;
 }
 
 html {
@@ -32,15 +32,15 @@ h6 {
 
 p {
     margin: 0 0 25px;
-    font-size: 18px;
-    line-height: 1.5;
+    font-size: 20px;
+    line-height: 1;
 }
 
 @media(min-width:767px) {
     p {
         margin: 0 0 35px;
-        font-size: 20px;
-        line-height: 1.6;
+        font-size: 17px;
+        line-height: 1;
     }
 }
 
@@ -73,7 +73,7 @@ a:focus {
     border-bottom: 1px solid rgba(255,255,255,.3);
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    background-color: #000;
+    background-color: #1A1A1A;
 }
 
 .navbar-custom .navbar-brand {
@@ -86,7 +86,7 @@ a:focus {
 
 .navbar-custom .navbar-brand .navbar-toggle {
     padding: 4px 6px;
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
 }
 
@@ -97,11 +97,13 @@ a:focus {
 
 .navbar-custom a {
     color: #fff;
+    font-size: 14px;
 }
 
 .navbar-custom .nav li.active {
     outline: none;
     background-color: #990000;
+    font-size: 16px;
 }
 
 .navbar-custom .nav li a {
@@ -130,7 +132,7 @@ a:focus {
 
     .top-nav-collapse {
         padding: 0;
-        background-color: #000;
+        background-color: #1A1A1A;
     }
 
     .navbar-custom.top-nav-collapse {
@@ -141,12 +143,11 @@ a:focus {
 .intro {
     display: table;
     width: 100%;
-    height: auto;
-
+    height: bot;
     text-align: center;
     color: #fff;
     background: url(../img/bg.jpg) no-repeat bottom center scroll;
-    background-color: #000;
+    background-color: #1A1A1A;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -185,11 +186,11 @@ a:focus {
 }
 
 .btn-circle {
-    width: 70px;
-    height: 70px;
-    margin-top: 15px;
-    padding: 7px 16px;
-    border: 2px solid #fff;
+    width: 50px;
+    height: 50px;
+    margin-top: 0px;
+    padding: 0px 0px;
+    border: 1px solid #fff;
     border-radius: 35px;
     font-size: 40px;
     color: #fff;
@@ -202,8 +203,8 @@ a:focus {
 .btn-circle:hover,
 .btn-circle:focus {
     outline: 0;
-    color: #fff;
-    background: rgba(255,255,255,.1);
+    color: #000;
+    background: #219ab3;
 }
 
 .btn-circle i.animated {
@@ -264,10 +265,11 @@ a:focus {
 
 .download-section {
     width: 100%;
+    height: 50%;
     padding: 50px 0;
     color: #fff;
     background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
-    background-color: #000;
+    background-color: #1A1A1A;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -278,21 +280,6 @@ a:focus {
     width: 70%;
     margin-top: 10px;
     margin-left: auto;
-}
-
-.mapp {
-    width: 500px;
-    height: 300px;
-    margin-top: 10px;
-    padding-right: 250px;
-}
-
-.mapp1 {
-    width: 250px;
-    height: 300px;
-    margin-top: 10px;
-    padding-right: 60px;
-
 }
 
 @media(min-width:767px) {
@@ -356,11 +343,16 @@ ul.banner-social-buttons {
 }
 
 footer {
-    padding: 50px 0;
+    padding: 40px 0;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+    line-height: 1.2;
+
 }
 
 footer p {
     margin: 0;
+    line-height: 1.5;
 }
 
 ::-moz-selection {
@@ -385,4 +377,103 @@ img::-moz-selection {
 
 body {
     webkit-tap-highlight-color: rgba(255,255,255,.2);
+}
+
+.btn-facebook {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #2b4b90;
+  *background-color: #133783;
+  background-image: -moz-linear-gradient(top, #3b5998, #133783);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3b5998), to(#133783));
+  background-image: -webkit-linear-gradient(top, #3b5998, #133783);
+  background-image: -o-linear-gradient(top, #3b5998, #133783);
+  background-image: linear-gradient(to bottom, #3b5998, #133783);
+  background-repeat: repeat-x;
+  border-color: #133783 #133783 #091b40;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3b5998', endColorstr='#ff133783', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-facebook:hover,
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook.active,
+.btn-facebook.disabled,
+.btn-facebook[disabled] {
+  color: #ffffff;
+  background-color: #133783;
+  *background-color: #102e6d;
+}
+
+.btn-facebook:active,
+.btn-facebook.active {
+  background-color: #0d2456 \9;
+}
+
+.btn-twitter {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #1c95d0;
+  *background-color: #0271bf;
+  background-image: -moz-linear-gradient(top, #2daddc, #0271bf);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2daddc), to(#0271bf));
+  background-image: -webkit-linear-gradient(top, #2daddc, #0271bf);
+  background-image: -o-linear-gradient(top, #2daddc, #0271bf);
+  background-image: linear-gradient(to bottom, #2daddc, #0271bf);
+  background-repeat: repeat-x;
+  border-color: #0271bf #0271bf #014473;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2daddc', endColorstr='#ff0271bf', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-twitter:hover,
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter.active,
+.btn-twitter.disabled,
+.btn-twitter[disabled] {
+  color: #ffffff;
+  background-color: #0271bf;
+  *background-color: #0262a6;
+}
+
+.btn-twitter:active,
+.btn-twitter.active {
+  background-color: #01538d \9;
+}
+
+.btn-google-plus {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #d34332;
+  *background-color: #c53727;
+  background-image: -moz-linear-gradient(top, #dd4b39, #c53727);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#dd4b39), to(#c53727));
+  background-image: -webkit-linear-gradient(top, #dd4b39, #c53727);
+  background-image: -o-linear-gradient(top, #dd4b39, #c53727);
+  background-image: linear-gradient(to bottom, #dd4b39, #c53727);
+  background-repeat: repeat-x;
+  border-color: #c53727 #c53727 #85251a;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdd4b39', endColorstr='#ffc53727', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-google-plus:hover,
+.btn-google-plus:focus,
+.btn-google-plus:active,
+.btn-google-plus.active,
+.btn-google-plus.disabled,
+.btn-google-plus[disabled] {
+  color: #ffffff;
+  background-color: #c53727;
+  *background-color: #b03123;
+}
+
+.btn-google-plus:active,
+.btn-google-plus.active {
+  background-color: #9a2b1f \9;
 }
